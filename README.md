@@ -4,7 +4,9 @@ Converts Whatsapp chat files to dictionary or JSON format.
 
 **Works with exports from iPhone and Android. Be sure to mention device.**
 
-# Arg Parser
+## Using Command Line Arguments
+
+```python WhatsappJsonParser.py [OPTIONS]```
 
 ```
 usage: WhatsappJsonParser.py [-h] -f FILE -d DEVICE [-s SAVE] [-v]
@@ -20,26 +22,26 @@ optional arguments:
 ```
 
 
-# Usage
+## Using Native Python
 
-## Converting Text to Dict
+### Converting Text to Dict
 
 ```python
 output = WhatsappToJson().format(text = 'string with complete chat data', device = 'android'`)
 ```
 
-## Converting Whatsapp File to dictionary.
+### Converting Whatsapp File to dictionary.
 ```python
 output = WhatappToJson().formatFile(source='source_file_path', device = 'iphone')
 ```
 
-## Exporting Whatsapp File to Json.
+### Exporting Whatsapp File to Json.
 
 ```python
 WhatappToJson().formatFile(source='source_file_path', destination='destination_path.json', device = 'android')
 ```
 
-# Sample Export
+## Sample Export
 
 ```json
 {
@@ -61,6 +63,7 @@ WhatappToJson().formatFile(source='source_file_path', destination='destination_p
     },
      {
       "date": "15/08/17 12:27:34 PM",
+      "message": "message for attachment",
       "sender": "sender name",
       "type": "attachment",
       "attachment": {
