@@ -5,7 +5,8 @@ import sys
 from pprint import pprint
 import constants
 import json
-
+import argparse
+import os.path
 
 class WhatappToJson(object):
 
@@ -89,10 +90,45 @@ class WhatappToJson(object):
             with open(destination, 'w') as file:
                 file.write(json.dumps(output, ensure_ascii=False, indent=2))
         return output
+    
+def getCommandLineArguments():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-f", "--file", required=True,
+        help="chat text file")
+    ap.add_argument("-d", "--device", required=True,
+        help="can be 'iphone' or 'android'")
+    ap.add_argument("-s", "--save", required=False,
+        help="path of file/direction to save json, 'default' would be same as text file name in same directory")
+    ap.add_argument('-v','--verbose', action='store_const',
+                    const=True, default=False,
+                    help='Verbose (Print output)')
+    args = vars(ap.parse_args())
+
+    file_path: str = args.get('file')
+    device: str = args.get('device').lower()
+    destination: str = args.get('save')
+    verbose: str = args.get('verbose')
+
+    if not os.path.isfile(file_path):
+        ap.error('Could not find '+file_path)
+    if not file_path.endswith('.txt'):
+        ap.error('File does not end with .txt: '+file_path)
+
+    if destination and  os.path.isdir(destination):
+        destination = os.path.join(destination, file_path[:-4])
+    if destination and destination.lower().strip() == 'default':
+        destination = os.path.dirname(file_path) + file_path[:-4]
+    if destination and not destination.endswith('.json'):
+        destination +='.json'
+    
+
+    if device not in ['iphone','android']:
+        ap.error('device can be either \'iphone\' or \'android\'. Others are not supported yet.')
+    
+    return file_path, device, destination, verbose
 
 if __name__ == "__main__":
-    for i in sys.argv[1:]:
-        output = WhatappToJson().formatFile(
-            source=i, destination='temp.json', device='iphone')
-
+    file_path, device, destination, verbose = getCommandLineArguments()
+    output = WhatappToJson().formatFile(source=file_path, destination=destination, device=device)
+    if verbose:
         pprint(output)
