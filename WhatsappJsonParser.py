@@ -1,12 +1,14 @@
-import helper
-from functools import lru_cache
+import argparse
+import json
+import os.path
 import re
 import sys
+from functools import lru_cache
 from pprint import pprint
+
 import constants
-import json
-import argparse
-import os.path
+import helper
+
 
 class WhatappToJson(object):
 
@@ -19,6 +21,23 @@ class WhatappToJson(object):
 
     @staticmethod
     def format(text: str, device: str = 'iphone'):
+        """ Formats String of chat into JSON.
+
+        Arguments:
+            text {str} -- formats chat string
+        
+        Keyword Arguments:
+            device {str} -- either 'android' or 'iphone' (default: {'iphone'})
+        
+        Returns:
+            dict -- {
+                        'device': device,
+                        'attachment_extensions': list(attachment_extensions),
+                        'participants': list(participants),
+                        'chats': output
+                    }
+        """
+
         delimiter_format, attachment_format, attachment_delimiters = WhatappToJson.get_device_specific_metas(
             device=device)
         
@@ -80,6 +99,19 @@ class WhatappToJson(object):
 
     @staticmethod
     def formatFile(source: str, destination: str = None, device: str = 'iphone'):
+        """Reads in a file and then sends to formatFunction
+        
+        Arguments:
+            source {str} -- file path of source chat file
+        
+        Keyword Arguments:
+            destination {str} -- destination of file if file is to be exported as json (default: {None})
+            device {str} -- either 'android' or 'iphone' (default: {'iphone'})
+        
+        Returns:
+            dict -- same as that of format function
+        """
+
         text = ''
         with open(source) as f:
             text = f.read()
