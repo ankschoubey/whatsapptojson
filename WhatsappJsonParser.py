@@ -22,7 +22,7 @@ class WhatappToJson(object):
         return constants.devices[device]['delimeter_format'], constants.devices[device]['attachment_tag'], constants.devices[device]['attachment_delimeters']
 
     @staticmethod
-    def format(text: str, device: str = 'iphone'):
+    def format(text: str, device: str = 'iphone',group_dates: bool= False):
         """ Formats String of chat into JSON.
 
         Arguments:
@@ -92,15 +92,33 @@ class WhatappToJson(object):
                 participants.add(sender)
             output.append(line)
 
+        if group_dates:
+            output = WhatappToJson.groupDates(output)
+
         return {
             'device': device,
             'attachment_extensions': list(attachment_extensions),
             'participants': list(participants),
-            'chats': output
+            'chats': output,
+            'group_dates': group_dates
         }
 
     @staticmethod
-    def formatFile(source: str, destination: str = None, device: str = 'iphone'):
+    def groupDates(chats: dict) -> dict:
+
+        ONLY_DATE_FORMAT = '%d/%m/%Y'
+        
+        output: dict = {}
+ 
+        for chat in chats:
+            date =  helper.get_date(chat['date']).strftime(ONLY_DATE_FORMAT)
+            output.setdefault(date, [])
+            output[date].append(chat)
+
+        return output
+
+    @staticmethod
+    def formatFile(source: str, destination: str = None, device: str = 'iphone', group_dates: bool= False):
         """Reads in a file and then sends to formatFunction
         
         Arguments:
@@ -118,7 +136,7 @@ class WhatappToJson(object):
         with open(source) as f:
             text = f.read()
 
-        output = WhatappToJson.format(text, device=device)
+        output = WhatappToJson.format(text, device=device, group_dates=group_dates)
 
         if destination is not None:
             with open(destination, 'w') as file:
@@ -136,12 +154,18 @@ def getCommandLineArguments():
     ap.add_argument('-v','--verbose', action='store_const',
                     const=True, default=False,
                     help='Verbose (Print output)')
+    ap.add_argument('-gd','--groupdates', action='store_const',
+                    const=True, default=False,
+                    help='Group Chats from Same Date together')
     args = vars(ap.parse_args())
 
     file_path: str = args.get('file')
     device: str = args.get('device').lower()
     destination: str = args.get('save')
-    verbose: str = args.get('verbose')
+    verbose: bool = args.get('verbose')
+    groupDates: bool = args.get('groupdates')
+
+    print(groupDates)
 
     if not os.path.isfile(file_path):
         ap.error('Could not find '+file_path)
@@ -159,10 +183,10 @@ def getCommandLineArguments():
     if device not in ['iphone','android']:
         ap.error('device can be either \'iphone\' or \'android\'. Others are not supported yet.')
     
-    return file_path, device, destination, verbose
+    return file_path, device, destination, verbose, groupDates
 
 if __name__ == "__main__":
-    file_path, device, destination, verbose = getCommandLineArguments()
-    output = WhatappToJson().formatFile(source=file_path, destination=destination, device=device)
+    file_path, device, destination, verbose, groupDates = getCommandLineArguments()
+    output = WhatappToJson().formatFile(source=file_path, destination=destination, device=device, group_dates=groupDates)
     if verbose:
         pprint(output)

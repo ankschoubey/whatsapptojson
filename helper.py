@@ -2,7 +2,7 @@ from datetime import datetime
 
 from constants import  devices
 
-def get_date(string, device_type):
+def get_date(string, device_type='iphone'):
     DATE_FORMAT = devices[device_type]['date_format']
     if len(string.strip()) == 0:
         return None
