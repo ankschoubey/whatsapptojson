@@ -1,16 +1,14 @@
-messages = {
-    "encryption": "\u200eMessages to this chat and calls are now secured with end-to-end encryption.",
+devices = {
+    'iphone' :{
+        'date_format': '%d/%m/%y %I:%M:%S %p',
+        'delimeter_format': ']|: ',
+        'attachment_tag': '<\u200eattached>',
+        'attachment_delimeters': ' • ‎| <\u200eattached>'
+    },
+    'android' :{
+        'date_format': '%m/%d/%y %I:%M %p',
+        'delimeter_format': ' - |: ',
+        'attachment_tag': '(file attached)',
+        'attachment_delimeters' : '\(file attached\)'
+    }
 }
-
-whatsapp_metas = ["\u200eMessages to this chat and calls are now secured with end-to-end encryption.", ]
-
-
-class message_type:
-    normal = 0
-    continued = 1
-    meta = 2
-    pdf = 3
-    photo = 4
-    audio = 5
-
-DATE_FORMAT = '%d/%m/%y %I:%M:%S %p'
