@@ -4,7 +4,7 @@ import re
 import sys
 from pprint import pprint
 import constants
-
+import json
 
 class WhatappToJson(object):
 
@@ -12,11 +12,11 @@ class WhatappToJson(object):
         pass
 
     @staticmethod
-    def get_message_type(message):
-        pass
-
-    @staticmethod
     def format(text: str):
+
+        participants = set()
+        attachment_extensions = set()
+
         output = []
         for i in text.split('\n'):
             splitted = re.split(']|: ', i)
@@ -54,11 +54,20 @@ class WhatappToJson(object):
                     'meta': '' if len(meta) == 0 else meta[0],
                     'extention': extention
                 }
+                attachment_extensions.add(extention)
                 del line['message']
 
+            sender = line.get('sender',False)
+
+            if sender:
+                participants.add(sender)
             output.append(line)
 
-        return output
+        return {
+            'attachment_extensions': list(attachment_extensions),
+            'participants': list(participants),
+            'chats': output
+            }
 
     @staticmethod
     def formatFile(source: str, destination: str = None):
@@ -72,13 +81,12 @@ class WhatappToJson(object):
             return output
 
         with open(destination, 'w') as file:
-            file.write(output)
+            
+            file.write(json.dumps(output, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
     for i in sys.argv[1:]:
-        output = WhatappToJson().formatFile(source=i)
+        output = WhatappToJson().formatFile(source=i, destination='temp.json')
 
         pprint(output)
-
-    pass
