@@ -2,17 +2,41 @@
 
 Converts Whatsapp chat files to dictionary or JSON format.
 
-Currently only works with exports from iPhone.
+**Works with exports from iPhone and Android. Be sure to mention device.**
 
-# Converting Whatsapp text to dictionary.
-```python
-output = WhatappToJson().formatFile(source='source_file_path')
+# Arg Parser
+
+```
+usage: WhatsappJsonParser.py [-h] -f FILE -d DEVICE [-s SAVE] [-v]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f FILE, --file FILE  chat text file
+  -d DEVICE, --device DEVICE
+                        can be 'iphone' or 'android'
+  -s SAVE, --save SAVE  path of file/direction to save json, 'default' would
+                        be same as text file name in same directory
+  -v, --verbose         Verbose (Print output)
 ```
 
-# Exporting Whatsapp text to Json.
+
+# Usage
+
+## Converting Text to Dict
 
 ```python
-WhatappToJson().formatFile(source='source_file_path', destination='destination_path.json')
+output = WhatsappToJson().format(text = 'string with complete chat data', device = 'android'`)
+```
+
+## Converting Whatsapp File to dictionary.
+```python
+output = WhatappToJson().formatFile(source='source_file_path', device = 'iphone')
+```
+
+## Exporting Whatsapp File to Json.
+
+```python
+WhatappToJson().formatFile(source='source_file_path', destination='destination_path.json', device = 'android')
 ```
 
 # Sample Export
@@ -54,5 +78,4 @@ WhatappToJson().formatFile(source='source_file_path', destination='destination_p
     ]
 }
  ```
-Each item in chats could have type of "whatsapp meta" or "attachment" or "conversation"
- 
+Each item in chats could have type of "whatsapp meta" or "attachment" or "conversation".
