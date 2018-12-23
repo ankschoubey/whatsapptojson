@@ -109,3 +109,6 @@ venv.bak/
 .idea/Whatsapp-Text-To-Json-Converter.iml
 .idea/workspace.xml
 .vscode/launch.json
+.idea/dbnavigator.xml
+.idea/encodings.xml
+.idea/codeStyles/Project.xml

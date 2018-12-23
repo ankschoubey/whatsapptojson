@@ -67,7 +67,9 @@ class WhatappToJson(object):
             except:  # if not in date format then it is continuation of last message
                 output[-1]['message'] += '\n'+i
                 continue
-                
+            
+            line['message'] = line['message'].rstrip(' \n')
+
             if len(splitted) == 2 and line['message'] == '':  # Whatsapp Meta
                 line['message'] = line['sender']
                 del line['sender']
