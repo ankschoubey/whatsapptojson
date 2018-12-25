@@ -17,7 +17,7 @@ def _get_device_specific_metas(device: str):
     return devices[device]['delimeter_format'], devices[device]['attachment_tag'], devices[device]['attachment_delimeters']
 
 
-def format(text: str, device: str = 'iphone', group_dates: bool = False):
+def format(text: str, device: str, group_dates: bool = False):
     """ Formats String of chat into JSON.
 
     Arguments:
@@ -118,7 +118,7 @@ def _group_dates(chats: dict) -> dict:
     return output
 
 
-def format_file(source: str, destination: str = None, device: str = 'iphone', group_dates: bool = False):
+def format_file(source: str, device: str, destination: str = None, group_dates: bool = False):
     """Reads in a file and then sends to formatFunction
 
     Arguments:
