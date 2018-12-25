@@ -28,16 +28,17 @@ optional arguments:
 
 ## Using Native Python
 
-whatsapptojson.format() - to convert a read text to dictionary
-whatsapptojson.format_file() - to read file from text to dictionary/json
+```whatsapptojson.format()``` - to convert a read text to dictionary
 
-be sure to mention device attribute correctly 'iphone' or 'android'.
+```whatsapptojson.format_file()``` - to read file from text to dictionary/json
+
+be sure to mention ```device``` attribute correctly ```iphone``` or ```android```.
 
 ```python
 from whatsapptojson import whatsapptojson
 
 # Converting Text to Dict
-output = whatsapptojson.format(text = 'string with complete chat data', device = 'android'`)
+output = whatsapptojson.format(text = 'string with complete chat data', device = 'android')
 
 # Converting File to dictionary.
 output = whatsapptojson.format_file(source='source_file_path', device = 'iphone')
