@@ -10,10 +10,10 @@ Converts Whatsapp chat files to dictionary or JSON format.
 
 ## Using Command Line Arguments
 
-```whatsapptojson [OPTIONS]```
+```python whatsapptojson.py [OPTIONS]```
 
 ```
-usage: whatsapptojson [-h] -f FILE -d DEVICE [-s SAVE] [-v]
+usage: whatsapptojson.py [-h] -f FILE -d DEVICE [-s SAVE] [-v]
 
 optional arguments:
   -h, --help            show this help message and exit
