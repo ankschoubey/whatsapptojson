@@ -4,12 +4,16 @@ Converts Whatsapp chat files to dictionary or JSON format.
 
 **Works with exports from iPhone and Android. Be sure to mention device.**
 
+## Installation
+
+```pip install whatsapptojson```
+
 ## Using Command Line Arguments
 
-```python WhatsappJsonParser.py [OPTIONS]```
+```whatsapptojson [OPTIONS]```
 
 ```
-usage: WhatsappJsonParser.py [-h] -f FILE -d DEVICE [-s SAVE] [-v]
+usage: whatsapptojson [-h] -f FILE -d DEVICE [-s SAVE] [-v]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -24,21 +28,25 @@ optional arguments:
 
 ## Using Native Python
 
-### Converting Text to Dict
+whatsapptojson.format() - to convert a read text to dictionary
+whatsapptojson.format_file() - to read file from text to dictionary/json
+
+be sure to mention device attribute correctly 'iphone' or 'android'.
 
 ```python
-output = WhatsappToJson().format(text = 'string with complete chat data', device = 'android'`)
-```
+from whatsapptojson import whatsapptojson
 
-### Converting Whatsapp File to dictionary.
-```python
-output = WhatappToJson().formatFile(source='source_file_path', device = 'iphone')
-```
+# Converting Text to Dict
+output = whatsapptojson.format(text = 'string with complete chat data', device = 'android'`)
 
-### Exporting Whatsapp File to Json.
+# Converting File to dictionary.
+output = whatsapptojson.format_file(source='source_file_path', device = 'iphone')
 
-```python
-WhatappToJson().formatFile(source='source_file_path', destination='destination_path.json', device = 'android')
+# Converting File to dictionary.
+output = whatsapptojson.format_file(source='source_file_path', device = 'iphone')
+
+### Whatsapp File to Json.
+whatsapptojson.format_file(source='source_file_path', destination='destination_path.json', device = 'android')
 ```
 
 ## Sample Export
