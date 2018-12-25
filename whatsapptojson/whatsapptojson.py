@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 
 import argparse
 import json
@@ -8,13 +7,14 @@ import sys
 from functools import lru_cache
 from pprint import pprint
 
-import constants
-import helper
+from .constants import devices
+from .helper import get_date
 
 whatsapp_metas = '\u200eMessages to this chat and calls are now secured with end-to-end encryption.'
 
+
 def _get_device_specific_metas(device: str):
-    return constants.devices[device]['delimeter_format'], constants.devices[device]['attachment_tag'], constants.devices[device]['attachment_delimeters']
+    return devices[device]['delimeter_format'], devices[device]['attachment_tag'], devices[device]['attachment_delimeters']
 
 
 def format(text: str, device: str = 'iphone', group_dates: bool = False):
@@ -57,8 +57,8 @@ def format(text: str, device: str = 'iphone', group_dates: bool = False):
         }
 
         try:
-            line['date'] = helper.get_date(
-                line['date'], device).strftime(constants.devices['iphone']['date_format'])
+            line['date'] = get_date(
+                line['date'], device).strftime(devices['iphone']['date_format'])
         except:  # if not in date format then it is continuation of last message
             output[-1]['message'] += '\n'+i
             continue
@@ -111,7 +111,7 @@ def _group_dates(chats: dict) -> dict:
     output: dict = {}
 
     for chat in chats:
-        date = helper.get_date(chat['date']).strftime(ONLY_DATE_FORMAT)
+        date = get_date(chat['date']).strftime(ONLY_DATE_FORMAT)
         output.setdefault(date, [])
         output[date].append(chat)
 
@@ -188,5 +188,5 @@ if __name__ == "__main__":
     file_path, device, destination, verbose, groupDates = get_command_line_arguments()
     output = format_file(source=file_path, destination=destination,
                          device=device, group_dates=groupDates)
-    if verbose:
+    if verbose or destination == None:
         pprint(output)

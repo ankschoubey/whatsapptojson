@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from constants import  devices
+from .constants import devices
 
 def get_date(string, device_type='iphone'):
     DATE_FORMAT = devices[device_type]['date_format']
@@ -24,5 +24,3 @@ if __name__ == "__main__":
 
     date = '20/07/16, 4:51:01 PM'
     print(get_date(date, 'iphone'))
-
-    

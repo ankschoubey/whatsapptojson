@@ -1,3 +1,3 @@
-from whatsapptojson import *
+from .whatsapptojson import *
 
 name = 'whatsapptojson'
