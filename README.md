@@ -19,7 +19,8 @@ optional arguments:
   -h, --help            show this help message and exit
   -f FILE, --file FILE  chat text file
   -d DEVICE, --device DEVICE
-                        can be 'iphone' or 'android'
+                        can be 'iphone' or 'android', or 'iphone_24' 
+                        or 'android_24' if your file uses 24h timestamps
   -s SAVE, --save SAVE  path of file/direction to save json, 'default' would
                         be same as text file name in same directory
   -v, --verbose         Verbose (Print output)
@@ -32,7 +33,7 @@ optional arguments:
 
 ```whatsapptojson.format_file()``` - to read file from text to dictionary/json
 
-be sure to mention ```device``` attribute correctly ```iphone``` or ```android```.
+be sure to mention ```device``` attribute correctly ```iphone```, ```android```, ```iphone_24``` or ```android_24```.
 
 ```python
 from whatsapptojson import whatsapptojson
