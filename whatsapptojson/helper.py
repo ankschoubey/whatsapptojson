@@ -22,5 +22,11 @@ if __name__ == "__main__":
     date = '12/15/18, 11:28 AM'
     print(get_date(date, 'android'))
 
+    date = '12/15/18, 11:28'
+    print(get_date(date, 'android_24'))
+
     date = '20/07/16, 4:51:01 PM'
     print(get_date(date, 'iphone'))
+
+    date = '20/07/16, 4:51:01'
+    print(get_date(date, 'iphone_24'))
